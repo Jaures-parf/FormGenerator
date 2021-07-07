@@ -18,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController titreFormController, questionController;
   //TextEditingController name = TextEditingController();
   List<TextEditingController> name = [ for (int i=1; i<75; i++) TextEditingController()];
+  TextEditingController a = new TextEditingController();
   GlobalKey<FormState> _form = new GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isthere = false;
@@ -27,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Titres> _titres = [];
   DB db;
   List<Option> _options = [];
-  List<String> _mesReponses = [];
+  List<String>  _mesReponses = [];
 
 
   getOptions() async {
@@ -44,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     db = new DB();
     titreFormController = new TextEditingController();
     questionController = new TextEditingController();
+    List<TextEditingController> name = [ for (int i=1; i<75; i++) TextEditingController()];
     getAllTitles();
     getQuestions();
     getOptions();
@@ -82,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Smartsurvey', style: tStyle(),),
         centerTitle: false,
         actions: [
+          // ignore: deprecated_member_use
           FlatButton(
             child: Text('Map', style: tStyle(),),
             onPressed: (){
@@ -98,9 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     // print (_mesReponses[1]);
                     print ("Bonjour #######");
                     if(_form.currentState.validate())
-                    {
-                      for (int i=1; i<3;  i++) {
-                        if (_mesReponses[1] != null) {
+
+                      for (int i=1; i<5;  i++) {
+                        if (_mesReponses[i] != null) {
                           Reponse reponse = new Reponse(
                             id: widget.id,
                             id_question: i,
@@ -114,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         else {print ("ERREUR !!!!!!!!!!!!!");}
                       }
                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> MyHomePage(id: widget.id)));
-                    }
+
                   },
                   child: Container(
                    // width: MediaQuery.of(context).size.width,
@@ -147,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       //getOptions(_questions[index].id, index);
                      // print(_questions);
                       //print (_questions[index].question);
-                      //print (index);
+                      print (index);
                       return _questions[index].question != null? Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Column(
@@ -197,11 +200,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget getTypeChamp(String type, int index){
+  Widget getTypeChamp(String type, int index) {
+    print ("bbbbbbbbbbbbbbbbbbbbbbbbb");
+    print (index);
     Widget _widget;
     switch(type){
       case 'Zone de texte':
-        var index;
         _widget = Container(
           width: MediaQuery.of(context).size.width,
           height: 50,
@@ -215,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Padding(
             padding: EdgeInsets.only(left: 15),
             child: TextFormField(
-              controller: name[index],
+                controller: name[index],
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -224,12 +228,16 @@ class _MyHomePageState extends State<MyHomePage> {
               validator: (reponse){
                 if(reponse.isEmpty){
                   return 'Veuillez remplir ce champ';
+
                 }
                 else {
                   print ("******************************************");
-                  _mesReponses[index] = name[index].text;
-
-                  print (_mesReponses[index]);
+                  print(_mesReponses.toString());
+                  print(index);
+                  //_mesReponses[1] = reponse;
+                 // print(_mesReponses[2].toString());
+                   _mesReponses[index] = name[index].text;
+                  //print (a.text);
                 }
 
                 return null;
